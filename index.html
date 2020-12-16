@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+#perso_Astro {
+  width: 100%;
+  height: 100%;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <form type="submit" action="" id="formu" method="GET">
+        <label for="jour">Jour</label>
+        <input type="number" name="" id="jour" placeholder="jour" min="1" max="31">
+        <label for="mois">mois</label>
+        <input type="number" name="" id="mois" placeholder="mois" min="1" max="12">
+        <button type="submit">Signe Astro</button>
+    </form>
+    <p id="astro">
+    </p>
+
+
+
+    <script>
+        const signs = {
+            'Belier': {
+                start: 321,
+                end: 420,
+            },
+
+            'Taureau': {
+                start: 421,
+                end: 521,
+            },
+
+            'Gemeaux': {
+                start: 522,
+                end: 621,
+            },
+
+            'Cancer': {
+                start: 622,
+                end: 722,
+            },
+
+            'Lion': {
+                start: 723,
+                end: 822,
+            },
+
+            'Vierge': {
+                start: 823,
+                end: 922,
+            },
+
+            'Balance': {
+                start: 923,
+                end: 1022,
+            },
+
+            'Scorpion': {
+                start: 1023,
+                end: 1122,
+            },
+
+            'Sagittaire': {
+                start: 1123,
+                end: 1221,
+            },
+
+            'Capricorne': {
+                start: 1222,
+                end: 120,
+            },
+
+            'Verseau': {
+                start: 121,
+                end: 219,
+            },
+
+            'Poisson': {
+                start: 220,
+                end: 320,
+            },
+
+
+        }
+
+        document.addEventListener('submit', handSubmit);
+
+        function handSubmit(evt) {
+            evt.preventDefault();
+
+            let jour = document.querySelector('#jour').value;
+            let mois = document.querySelector('#mois').value;
+            let astro = document.querySelector('#astro');
+
+            if (jour !== '' && mois !== '') {
+
+                let signfounded = findSign(jour, mois);
+                astro.innerHTML = '<img src="images_astro/' + signfounded + '.jpg" id="perso_Astro" alt="' +
+                    signfounded +
+                    '">';
+                clean();
+            } else {
+                astro.textContent = 'Manque d\'informations';
+            }
+        }
+
+        function findSign(day, month) {
+            let total = returnFullDate(day, month);
+            for (const key in signs) {
+
+                let signData = signs[key];
+                let startData = parseInt(signData.start);
+                let endData = parseInt(signData.end);
+
+                if (total >= 1222 || total <= 120) {
+                    return 'Capricorne';
+                } else if (total >= startData && total <= endData) {
+                    return key;
+                }
+
+
+            }
+        }
+
+        function returnFullDate(day, month) {
+
+            let jour = parseInt(day);
+
+            if (jour < 10) {
+                jour = '0' + jour;
+            }
+
+            return parseInt(month + '' + jour);
+        }
+
+
+        function clean() {
+            document.querySelector('#jour').value = '';
+            document.querySelector('#mois').value = '';
+        }
+    </script>
+
+</body>
+
+</html>
